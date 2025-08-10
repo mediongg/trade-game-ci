@@ -7,11 +7,46 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Log in to GitHub Packages
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Download trade-game Repo
         uses: actions/checkout@v4
         with:
           repository: 'mediongg/trade-game'
           path: './trade-game'
           token: ${{ secrets.GH_PAT }}
-      - name: Verify repository checkout
-        run: ls -aR ./trade-game
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push backend Docker image
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          context: './trade-game'
+          file: './Dockerfile'
+          # This specifies the target architectures for the build.
+          platform: linux/amd64,linux/arm64
+          tags: |
+            backend:latest
+            backend:${{ github.sha }}
+
+      - name: Build and push frontend Docker image
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          context: './trade-game'
+          file: './Dockerfile-nginx'
+          # This specifies the target architectures for the build.
+          platform: linux/amd64,linux/arm64
+          tags: |
+            frontend:latest
+            frontend:${{ github.sha }}
