@@ -8,9 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Use secrets as environment variables
-        env:
-          VAR1: ${{ secrets.VAR1 }}
-          VAR2: ${{ secrets.VAR2 }}
-        run: echo "The value of VAR1 is $VAR1 and VAR2 is $VAR2"
+        name: Download trade-game Repo
+        with:
+          repository: 'mediongg/trade-game'
+          path: './trade-game'
+          token: ${{ secrets.GH_PAT }}
+  
+      - name: Verify repository checkout
+        run: ls -aR ./trade-game
