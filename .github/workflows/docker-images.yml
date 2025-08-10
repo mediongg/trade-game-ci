@@ -7,12 +7,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        name: Download trade-game Repo
+      - name: Download trade-game Repo
+        uses: actions/checkout@v4
         with:
           repository: 'mediongg/trade-game'
           path: './trade-game'
           token: ${{ secrets.GH_PAT }}
-  
+
       - name: Verify repository checkout
         run: ls -aR ./trade-game
