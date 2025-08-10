@@ -8,11 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download trade-game Repo
-        uses: actions/checkout@v4
-        with:
-          repository: 'mediongg/trade-game'
-          path: './trade-game'
-          token: ${{ secrets.GH_PAT }}
+        run: |
+          git clone https://mediongg:${{ secrets.GH_PAT }}@github.com/mediongg/trade-game.git ./trade-game
 
       - name: Verify repository checkout
         run: ls -aR ./trade-game
