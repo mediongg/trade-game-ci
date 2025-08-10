@@ -32,7 +32,7 @@ jobs:
         with:
           push: true
           context: './trade-game'
-          file: './Dockerfile'
+          file: './trade-game/Dockerfile'
           # This specifies the target architectures for the build.
           platform: linux/amd64,linux/arm64
           tags: |
@@ -44,7 +44,7 @@ jobs:
         with:
           push: true
           context: './trade-game'
-          file: './Dockerfile-nginx'
+          file: './trade-game/Dockerfile-nginx'
           # This specifies the target architectures for the build.
           platform: linux/amd64,linux/arm64
           tags: |
